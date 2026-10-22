@@ -1,0 +1,10 @@
+[aws]
+s3_access_key_id = your_access_key
+s3_secret_access_key = your_secret_key
+s3_region_name = your_region_name
+s3_endpoint_url = your_custom_endpoint_url
+
+[datalake]
+bronze_bucket = your_bronze_zone_bucket
+silver_bucket = your_silver_zone_bucket
+gold_bucket = your_gold_zone_bucket
