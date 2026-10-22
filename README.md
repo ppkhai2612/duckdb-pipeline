@@ -50,36 +50,3 @@ There are Python scripts available in `scripts` directory for each phase (Ingest
 # schedule the aggregation pipeline script to run 2 hours past midnight
 0 2 * * * /path/to/your/venv/bin/python3 /path/to/your/duckdb-pipeline/scripts/run_agg_silver_data.py >> /tmp/aggregate_silver_data.out 2>&1
 ```
-
-## Output Logs
-
-**Ingestion**:
-
-```bash
-2026-10-22 12:31:40,346 - INFO - The URL to download is: http://data.gharchive.org/2026-10-22-4.json.gz
-2026-10-22 12:31:49,414 - INFO - Transferred: 262144 bytes to S3 bucket
-2026-10-22 12:31:49,414 - INFO - Transferred: 262144 bytes to S3 bucket
-2026-10-22 12:31:49,414 - INFO - Transferred: 262144 bytes to S3 bucket
-...
-2026-10-22 12:31:49,591 - INFO - Successfully uploaded gharchive/events/2026-10-22/04/2026-10-22-4.json.gz to gharchive-bronze
-2026-10-22 12:31:49,592 - INFO - Successfully ingested data for 2026-10-22 04:00:00
-```
-
-**Serilisation**:
-
-```bash
-2026-10-22 13:04:13,082 - INFO - DuckDB connection initiated
-2026-10-22 13:04:13,082 - INFO - DuckDB - collect source data files: s3://gharchive-bronze/gharchive/events/2026-10-22/04/*
-2026-10-22 13:04:16,282 - INFO - DuckDB - clean data
-2026-10-22 13:04:16,397 - INFO - DuckDB - serialise and export cleaned data to s3://gharchive-silver/gharchive/events/2026-10-22/04/clean_20261022_04.parquet
-2026-10-22 13:04:16,677 - INFO - Successfully serialised raw data for 2026-10-22 04:00:00
-```
-
-**Aggregation**:
-
-```bash
-2026-10-22 20:08:04,628 - INFO - DuckDB connection initiated
-2026-10-22 20:08:04,629 - INFO - DuckDB - aggregate silver data in s3://gharchive-silver/gharchive/events/2026-10-22/*/*.parquet
-2026-10-22 20:08:04,752 - INFO - DuckDB - export aggregated data to s3://gharchive-gold/gharchive/events/2026-10-22/agg_20261022.parquet
-2026-10-22 20:08:04,916 - INFO - Successfully aggregated bronze data for 2026-10-22 00:00:00
-```
